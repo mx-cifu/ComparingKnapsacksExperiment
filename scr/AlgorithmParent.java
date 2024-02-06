@@ -1,11 +1,14 @@
 public abstract class AlgorithmParent {
 
-    // Records the start time
+    /**
+     * The start time for the timer
+     */
     private long startTime;
 
     /**
      * Performs the knapsack algorithm on the given knapsack, and returns a TestResult
-     * object containing the metadata and results
+     * object containing the metadata and results. Should start timer at beginning of method,
+     * and return total time in TestResult.
      * @param knapsack to be solved
      * @return the results of the experiment
      */
@@ -23,7 +26,7 @@ public abstract class AlgorithmParent {
      * and return the total time the algorithm ran
      * @return algorithm run time
      */
-    public float endTimer() {
+    public long endTimer() {
         return System.nanoTime() - this.startTime;
     }
 }
