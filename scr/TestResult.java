@@ -5,7 +5,7 @@ public class TestResult {
      */
     private String algorithmName;
     /**
-     * Knapsack number being solved
+     * KnapsackGen.Knapsack number being solved
      */
     private int knapsackNumber;
     /**
