@@ -19,37 +19,39 @@ public class KnapGenMain {
 
     /**
      * This is the main constructor for the knapGenMain
+     *
      * @param newCSVFile Ture if you want to create new test.
      */
     public KnapGenMain(boolean newCSVFile) throws FileNotFoundException {
         //generator 3 csv files on top of the currently supplied three
-        if(newCSVFile){
+        if (newCSVFile) {
             generateCSV(3);
         }//
 
         //initiate the test generator
         //get scv files
-        ArrayList<csvNode> testList = new ArrayList<>();
-        getCSVList(testList);
-        //pass csv files to generator
-        //get a test object returned
+        ArrayList<knapsack> knapList = getKnapSackListFromCSV();
+
         //a pass test object to theTester
         //get testResults object returned
         //pass test object to TestMatrix
     }
 
+
     /**
      * BigO(n)
-     * O(m * (2n + 16)) where m is number of tests and n
-     * is the quanity of items in each test.
-     * method to get files from the knapsack file
-     * @param testList array of csvNode objects
+     * O(m * (2n + 17)) where m is the number of tests and n
+     * is the quality of items in each test.
+     * method to get files from the knapsack file and put them into a Knapsack
+     * object to be used by the tester
+     * @return an ArrayList full of knapsack test items.
      */
-    private void getCSVList(ArrayList<csvNode> testList) throws FileNotFoundException {
+    private ArrayList<Knapsack> getKnapSackListFromCSV() throws FileNotFoundException {
         File dir = new File("TestInputFolder");
-        if(dir.isDirectory()) {
+        if (dir.isDirectory()) {
             File[] fileList = dir.listFiles();
             String delimiter = ",";
+            ArrayList<Knapsack> knapList = new ArrayList<Knapsack>();
             for (File f : fileList) {
                 if (f.getName() != null && f.getName().contains("inputs")) {
                     Scanner s = new Scanner(f);
@@ -62,49 +64,48 @@ public class KnapGenMain {
                     String[] f3 = thirdLine.split(delimiter);
                     int testNumber = Integer.parseInt(f1[0]);
                     int weight = Integer.parseInt(f1[1]);
-                    int[] row2 = new int[f2.length];
-                    int[] row3 = new int[f3.length];
+                    Knapsack knap = new Knapsack(weight, testNumber);
                     for (int i = 0; i < f2.length; i++) {
-                        row2[i] = Integer.parseInt(f2[i]);
-                        row3[i] = Integer.parseInt(f3[i]);
+                        Item item = new Item(Integer.parseInt(f2[i], Integer.parseInt(f3[i])));
+                        knap.addItem(item);
                     }//end for loop
-                    csvNode node = new csvNode(testNumber, weight, row2, row3);
-                    testList.add(node);
+                    knapList.add(knap);
                 }
             }
-        }else{
+        } else {
             System.out.println("Your file is not a directory");
         }
+        return knapList;
     }
 
     /**
      * This will create the three extra required CSV files to be added to our test
      * If the files are already created it will overwrite them with new test.
      */
-    private void generateCSV(int numberOfExtraTest){
+    private void generateCSV(int numberOfExtraTest) {
         //get a file object
 
         Random r = new Random();
 
-        for(int i = 0; i < numberOfExtraTest; i++){
+        for (int i = 0; i < numberOfExtraTest; i++) {
             String fName = "TestInputFolder/inputs" + (i + 4) + ".csv";
-            String name =  String.valueOf(i + 4);
+            String name = String.valueOf(i + 4);
             StringWriter csvInput = new StringWriter();
             int weight = 100;// the highest weight will be 30
             //first line test number and weight allowed
             csvInput.append(name + "," + weight + ",\n");
             //get the random number for the first line
 
-            for(int l1 = 0; l1 < i * 5 + 20; l1 ++){
-                String l1Num = String.valueOf(r.nextInt(weight+ 10));
+            for (int l1 = 0; l1 < i * 5 + 20; l1++) {
+                String l1Num = String.valueOf(r.nextInt(weight + 10));
                 csvInput.append(l1Num + ",");
             }//end for
             csvInput.append("\n");
-            for(int l2 = 0; l2 < i * 5 + 20; l2++){
+            for (int l2 = 0; l2 < i * 5 + 20; l2++) {
                 String l2Num = String.valueOf(r.nextInt(weight + 10));
                 csvInput.append(l2Num + ",");
             }
-            try{
+            try {
                 FileWriter file = new FileWriter(fName);
                 file.write(csvInput.toString());
                 file.close();
@@ -115,64 +116,4 @@ public class KnapGenMain {
         }//end String
 
     }
-
-    public class csvNode{
-        private int numberName;
-        private int maxiumWeight;
-        private int [] profits;
-        private int [] weights;
-
-        /**
-         * O(1)
-         * This method will create a new csvNode class that is to
-         * be given to the test for creation of test.
-         *
-         * @param numberName test number name
-         * @param maxiumWeight  the max weight, on first line of csv
-         * @param profits that can be expected from each item
-         * @param weights that can be expected from each item
-         */
-        public csvNode (int numberName, int maxiumWeight, int [] profits, int [] weights){
-            this.numberName = numberName;
-            this.maxiumWeight = maxiumWeight;
-            this.profits = profits;
-            this.weights = weights;
-        }//end constructior
-
-        /**
-         * O(1)
-         * Method to get the test number
-         * @return the test number
-         */
-        public int getNumberName() {
-            return numberName;
-        }//end get number
-
-        /**
-         * O(1)
-         * Method to get the max weight
-         * @return max weight as an integer
-         */
-        public int getMaxiumWeight(){
-            return maxiumWeight;
-        }
-
-        /**
-         * O(1)
-         * Method for getting the arrays containing item weights
-         * @return the array of weights
-         */
-        public int[] getWeights(){
-            return weights;
-        }//end get weights
-
-        /**
-         * O(1)
-         * Method for getting the array of profits.
-         * @return profits
-         */
-        public int[] getProfits(){
-            return profits;
-        }
-    }
-}
+}//end class
