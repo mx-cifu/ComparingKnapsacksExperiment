@@ -1,3 +1,5 @@
+package KnapsackGenPackage;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -12,7 +14,7 @@ public class Knapsack implements Iterable<Item>{
     private int knapsackNum;
 
     /**
-     * Initializes a new Knapsack item
+     * Initializes a new KnapsackGen.Knapsack item
      * @param maxCapacity maximum capacity of this knapsack
      * @param knapsackNum the number of this knapsack
      */
