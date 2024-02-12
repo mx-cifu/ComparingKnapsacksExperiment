@@ -1,3 +1,5 @@
+import KnapsackGenPackage.Knapsack;
+
 public abstract class AlgorithmParent {
 
     /**
