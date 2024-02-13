@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class KnapsackGenMain {
 
-
+        private ArrayList<Knapsack> knapList;
 
 
         /**
@@ -22,8 +22,7 @@ public class KnapsackGenMain {
 
         /**
          * This is the main constructor for the knapGenMain
-         *
-         * @param newCSVFile Ture if you want to create new test.
+         * @param newCSVFile if true, then it will create new csv files for testing.
          */
         public KnapsackGenMain(boolean newCSVFile) throws FileNotFoundException {
             //generator 3 csv files on top of the currently supplied three
@@ -31,13 +30,12 @@ public class KnapsackGenMain {
                 generateCSV(3);
             }//
 
-            //initiate the test generator
-            //get scv files
-            ArrayList<Knapsack> knapList = getKnapSackListFromCSV();
+            this.knapList = getKnapSackListFromCSV();
 
-            //a pass test object to theTester
-            //gets testResults object returned
-            //pass test object to TestMatrix
+        }
+
+        public ArrayList<Knapsack> getKnapList(){
+            return this.knapList;
         }
 
 
@@ -82,8 +80,9 @@ public class KnapsackGenMain {
         }
 
         /**
+         * O(n * (11 + (20 + 5n)(4))
          * This will create the three extra required CSV files to be added to our test
-         * If the files are already created it will overwrite them with new test.
+         * If the files are already created, it will overwrite them with new test.
          */
         private void generateCSV(int numberOfExtraTest) {
             //get a file object

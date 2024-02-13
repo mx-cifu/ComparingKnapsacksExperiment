@@ -1,3 +1,5 @@
+package SelectingAlgoPackage;
+
 import KnapsackGenPackage.Knapsack;
 
 public abstract class AlgorithmParent {
@@ -8,9 +10,9 @@ public abstract class AlgorithmParent {
     private long startTime;
 
     /**
-     * Performs the knapsack algorithm on the given knapsack, and returns a TestResult
+     * Performs the knapsack algorithm on the given knapsack, and returns a SelectingAlgoPackage.TestResult
      * object containing the metadata and results. Should start timer at beginning of method,
-     * and return total time in TestResult.
+     * and return total time in SelectingAlgoPackage.TestResult.
      * @param knapsack to be solved
      * @return the results of the experiment
      */
