@@ -1,0 +1,120 @@
+package SelectingAlgoPackage;
+
+import KnapsackGenPackage.Item;
+import KnapsackGenPackage.Knapsack;
+
+import java.util.ArrayList;
+
+public class FractionalBruteForce extends AlgorithmParent{
+
+    // keeps track of the best max value so far
+    private double bestMax;
+    private ArrayList<Item> bestCombo;
+
+
+
+    /**
+     * Performs the knapsack algorithm on the given knapsack, and returns a SelectingAlgoPackage.TestResult
+     * object containing the metadata and results. Should start timer at beginning of method,
+     * and return total time in SelectingAlgoPackage.TestResult.
+     *
+     * @param knapsack to be solved
+     * @return the results of the experiment
+     */
+    @Override
+    public TestResult solveKnapsack(Knapsack knapsack) {
+        String name = "Fractional Brute Force Algorithm";
+        int knapsackNum = knapsack.getKnapsackNum();
+        int knapsackWtLeft = knapsack.getMaximumCapacity();
+        ArrayList<Item> items = knapsack.getItems();
+
+        // start time
+        startTimer();
+
+        // explore the different item combinations possible to retrieve the best max value
+        exploreCombos(items, 0, new ArrayList<>(), 0, knapsackWtLeft);
+
+
+
+        long endTimer = super.endTimer();
+        return new TestResult(name, knapsackNum, Math.round(bestMax * 100.0) / 100.0, endTimer);
+    }
+
+    /**
+     * Method to explore recursively the different possible item combinations that can be created while following the
+     * knapsack limitations and using the required items
+     * NOTE: Due to fractions being infinite, I made the choice to only use fractions to explore the LAST item in each
+     * combination as a fraction
+     * @param itemsList list of items in the knapsack
+     * @param startIdx beginning index to try
+     * @param currentCombo current combination of items being used
+     * @param currentWt amount of weight that the knapsack is currently holding
+     * @param maxCapacity max limit of the knapsack
+     */
+    private void exploreCombos(ArrayList<Item> itemsList, int startIdx, ArrayList<Item> currentCombo, int currentWt, int maxCapacity) {
+        // Establish what the current value of the current combination is
+        double currentValue = calculateValue(currentCombo);
+        if (currentWt <= maxCapacity) {
+            // Check to see what the current value could be when adding a fractional item as the last item
+            double bestValueWithFraction = addFractionalItem(itemsList, currentCombo, currentWt, maxCapacity, currentValue);
+            if (bestValueWithFraction > bestMax) {
+                bestMax = bestValueWithFraction; // Update bestMax with a new better max
+                bestCombo = new ArrayList<>(currentCombo); // Update bestCombo with the newest best combo
+            }
+        }
+
+        // enter into a loop exploring the different item
+        for (int idx = startIdx; idx < itemsList.size(); idx++) {
+            Item item = itemsList.get(idx);
+            int newWeight = currentWt + item.getWt();
+            // explore adding the new item if it fits into the knapsack whole, see if that creates the best combo
+            if (newWeight <= maxCapacity) {
+                currentCombo.add(item);
+                exploreCombos(itemsList, idx + 1, currentCombo, newWeight, maxCapacity);
+                currentCombo.remove(currentCombo.size() - 1); // Backtrack, remove the item
+            }
+        }
+    }
+
+    /**
+     * Private helper method to add a fraction of an item as the last item in a knapsack, finding the best one to add
+     * @param items ArrayList of Items associated with the knapsack
+     * @param currentCombo current combination of items that is being considered
+     * @param currentWt the current weight of the entirety of the knapsack
+     * @param maxCapacity the maximum weight capacity of the knapsack
+     * @param currentComboValue current total value of the combination of items being considered
+     * @return new total value of the ArrayList including the added fractional component
+     */
+    private double addFractionalItem(ArrayList<Item> items, ArrayList<Item> currentCombo, int currentWt, int maxCapacity, double currentComboValue) {
+        double remainingCapacity = maxCapacity - currentWt;
+        double bestFractionalValue = 0;
+        // iterate through the items of the knapsack, and exclude consideration of items already present within the
+        // current combination of items
+        for (Item item : items) {
+            if (!currentCombo.contains(item)) {
+                double potentialFractionalValue = 0;
+                if (item.getWt() > remainingCapacity) {
+                    // Get the fractional value of this item if it was added as the last item to the combination
+                    potentialFractionalValue = (remainingCapacity / item.getWt()) * item.getVal();
+                }
+                if (potentialFractionalValue > bestFractionalValue) {
+                    bestFractionalValue = potentialFractionalValue; // update the best fractional item value if needed
+                }
+            }
+        }
+        return currentComboValue + bestFractionalValue; // Return the total value including the best fractional addition
+    }
+
+    /**
+     * Private helper method to calculate the total value held by the combination of Items passed in
+     * @param items ArrayList of Item objects
+     * @return total value of the ArrayList of Items
+     */
+    private double calculateValue(ArrayList<Item> items) {
+        double totalVal = 0;
+        for (Item item : items) {
+            totalVal += item.getVal();
+        }
+        return totalVal;
+    }
+}
