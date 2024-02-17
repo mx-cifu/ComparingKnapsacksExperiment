@@ -1,5 +1,7 @@
 package SelectingAlgoPackage;
 
+import KnapsackGenPackage.Knapsack;
+
 public class TestResult {
 
     /**
@@ -9,7 +11,7 @@ public class TestResult {
     /**
      * KnapsackGen.Knapsack number being solved
      */
-    private int knapsackNumber;
+    private Knapsack knapsack;
     /**
      * Value of all items in knapsack after solving
      */
@@ -19,9 +21,9 @@ public class TestResult {
      */
     private long time;
 
-    public TestResult(String algorithmName, int knapsackNumber, double totalValue, long time) {
+    public TestResult(String algorithmName, Knapsack knapsack, double totalValue, long time) {
         this.algorithmName = algorithmName;
-        this.knapsackNumber = knapsackNumber;
+        this.knapsack = knapsack;
         this.totalValue = totalValue;
         this.time = time;
     }
@@ -38,8 +40,8 @@ public class TestResult {
      * Return knapsack number
      * @return knapsack number
      */
-    public int getKnapsackNumber() {
-        return knapsackNumber;
+    public Knapsack getKnapsack() {
+        return knapsack;
     }
 
     /**
