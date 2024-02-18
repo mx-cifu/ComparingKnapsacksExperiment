@@ -22,7 +22,6 @@ public class FractionalGreedy extends AlgorithmParent {
 
         //set up
         String name = "Fractional Greedy Algorithm";
-        int knapsackNum = knapsack.getKnapsackNum();
         int knapsackWtLeft = knapsack.getMaximumCapacity();
         double totalVal = 0;
         ArrayList<Item> itemsList = knapsack.getItems();
@@ -31,6 +30,7 @@ public class FractionalGreedy extends AlgorithmParent {
         super.startTimer();
         Collections.sort(itemsList, createRatioComparator());
         Iterator<Item> iterator = itemsList.iterator();
+        TestResult results = new TestResult(name, knapsack,0, 0);
 
         // while there are still items in the iterator, continue below
         while (iterator.hasNext() && knapsackWtLeft > 0) {
@@ -42,15 +42,17 @@ public class FractionalGreedy extends AlgorithmParent {
             if (knapsackWtLeft - oneItemWt >= 0) {
                 knapsackWtLeft -= oneItemWt;
                 totalVal += oneItemVal;
+                results.addItemsUsed(oneItem, oneItemWt);
             } else {
                 double amtToTake = (double)knapsackWtLeft/oneItemWt;
                 totalVal += oneItemVal * amtToTake;
+                results.addItemsUsed(oneItem, knapsackWtLeft);
                 knapsackWtLeft = 0;
             }
         }
-        long endTime = super.endTimer();
-
-        return new TestResult(name,knapsack,Math.round(totalVal * 100.0)/100.0, endTime);
+        results.adjustVal(Math.round(totalVal * 100.0) / 100.0);
+        results.adjustTime(super.endTimer());
+        return results;
     }
 
     /**
