@@ -48,7 +48,7 @@ public class KnapsackGenMain {
          * @return an ArrayList full of knapsack test items.
          */
         private ArrayList<Knapsack> getKnapSackListFromCSV() throws FileNotFoundException {
-            File dir = new File("TestInputFolder");
+            File dir = new File("data/data_input");
             ArrayList<Knapsack> knapList = new ArrayList<Knapsack>();
             if (dir.isDirectory()) {
                 File[] fileList = dir.listFiles();
@@ -90,7 +90,7 @@ public class KnapsackGenMain {
             Random r = new Random();
 
             for (int i = 0; i < numberOfExtraTest; i++) {
-                String fName = "TestInputFolder/inputs" + (i + 4) + ".csv";
+                String fName = "data/data_input/inputs" + (i + 4) + ".csv";
                 String name = String.valueOf(i + 4);
                 StringWriter csvInput = new StringWriter();
                 int weight = 100;// the highest weight will be 30
