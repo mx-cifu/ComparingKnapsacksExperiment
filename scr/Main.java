@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         TerminalOutput term = new TerminalOutput();
         term.printIntro();
-        KnapsackGenMain m = new KnapsackGenMain(false);
+        KnapsackGenMain m = new KnapsackGenMain(true);
         ArrayList<Knapsack> k = m.getKnapList();
         Dynamic01KnapSack d = new Dynamic01KnapSack();
         FractionalBruteForce fbf = new FractionalBruteForce();
@@ -23,6 +23,7 @@ public class Main {
         ArrayList<TestResult> fbfTest = new ArrayList<>();
         ArrayList<TestResult> fgTest = new ArrayList<>();
 
+        //o1 knapsack
         for(Knapsack sack : k){
             dynamicTest.add(d.solveKnapsack(sack));
             fbfTest.add(fbf.solveKnapsack(sack));
@@ -35,7 +36,6 @@ public class Main {
             term.printTestResults(fbfTest.get(index));
             term.printTestResults(fgTest.get(index));
             index++;
-
         }
 
     }

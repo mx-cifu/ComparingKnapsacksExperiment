@@ -81,7 +81,7 @@ public class TerminalOutput {
         Knapsack k = t.getKnapsack();
         ArrayList<Item> itemList = k.getItems();
         StringBuilder resultTuple = new StringBuilder();
-        Iterator keyIter = t.getItemsUsed().keys().asIterator();
+        Iterator keyIter = t.getItemsUsed().keySet().iterator();
         while(keyIter.hasNext()){
             Item keys = (Item) keyIter.next();
             capacityUsed += keys.getWt();
@@ -94,7 +94,7 @@ public class TerminalOutput {
                 }
                 index ++;
             }
-            int numUsed = t.getItemsUsed().get(keys);
+            int numUsed = t.getItemsUsed().get(keys); //integer from the dic
             double iBen =  numUsed * ((double)keys.getVal() / numUsed);
             resultTuple.append("Item # " + index + " : (" + keys.getVal() + ", " + keys.getWt() + ")" +
                     " \t | Used " +  numUsed + " items for " + iBen + "\n");
