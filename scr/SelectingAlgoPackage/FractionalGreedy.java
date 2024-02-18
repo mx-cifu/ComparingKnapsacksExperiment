@@ -50,7 +50,7 @@ public class FractionalGreedy extends AlgorithmParent {
         }
         long endTime = super.endTimer();
 
-        return new TestResult(name,knapsackNum,Math.round(totalVal * 100.0)/100.0, endTime);
+        return new TestResult(name,knapsack,Math.round(totalVal * 100.0)/100.0, endTime);
     }
 
     /**

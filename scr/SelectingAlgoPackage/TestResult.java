@@ -1,8 +1,18 @@
 package SelectingAlgoPackage;
 
+import KnapsackGenPackage.Item;
 import KnapsackGenPackage.Knapsack;
 
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 public class TestResult {
+    /**
+     * will hold the item and how many of the item was used
+     * in the final talley
+     */
+    Dictionary<Item, Integer> itemsUsed;
 
     /**
      * Name of algorithm being used
@@ -26,6 +36,18 @@ public class TestResult {
         this.knapsack = knapsack;
         this.totalValue = totalValue;
         this.time = time;
+        this.itemsUsed = new Hashtable<>();
+    }
+
+    /**
+     * O(1)
+     * Will add results to the testresult for the items used and
+     * the numebr of items for that item
+     * @param item is the item that was used
+     * @param numberUsed how many of that item were used.
+     */
+    public void addItemsUsed(Item item, int numberUsed){
+        this.itemsUsed.put(item, numberUsed);
     }
 
     /**
@@ -58,5 +80,14 @@ public class TestResult {
      */
     public long getTime() {
         return time;
+    }
+
+    /**
+     * (O(1)
+     * This will hold the items used for the test
+     * @return
+     */
+    public Dictionary<Item, Integer> getItemsUsed(){
+        return this.itemsUsed;
     }
 }
