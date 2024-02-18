@@ -6,13 +6,14 @@ import KnapsackGenPackage.Knapsack;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 
 public class TestResult {
     /**
      * will hold the item and how many of the item was used
      * in the final talley
      */
-    Dictionary<Item, Integer> itemsUsed;
+    LinkedHashMap<Item, Integer> itemsUsed;
 
     /**
      * Name of algorithm being used
@@ -36,7 +37,7 @@ public class TestResult {
         this.knapsack = knapsack;
         this.totalValue = totalValue;
         this.time = time;
-        this.itemsUsed = new Hashtable<>();
+        this.itemsUsed = new LinkedHashMap<>();
     }
 
     /**
@@ -87,7 +88,7 @@ public class TestResult {
      * This will hold the items used for the test
      * @return
      */
-    public Dictionary<Item, Integer> getItemsUsed(){
+    public LinkedHashMap<Item, Integer> getItemsUsed(){
         return this.itemsUsed;
     }
 }
