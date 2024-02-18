@@ -106,7 +106,7 @@ public class TerminalOutput {
         printLine("_", 40);
         System.out.println("Run Time: " + t.getTime());
         System.out.println("Capacity Used: " + capacityUsed + " (" + k.getMaximumCapacity() + " max Capacity)");
-        System.out.println("Items used for Project");
+        System.out.println("Items used for Project (v, w)");
         System.out.println(resultTuple.toString());
         System.out.println("Total Profit: " + t.getTotalValue());
         printLine("=", 40);

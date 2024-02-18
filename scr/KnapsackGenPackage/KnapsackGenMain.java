@@ -31,10 +31,14 @@ public class KnapsackGenMain {
             }//
 
             this.knapList = getKnapSackListFromCSV();
-
         }
 
-        public ArrayList<Knapsack> getKnapList(){
+    /**
+     * O(1)
+     * will return a Arraylist of knapsack objects when called
+     * @return the knapList object in a arraylist
+     */
+    public ArrayList<Knapsack> getKnapList(){
             return this.knapList;
         }
 
@@ -116,8 +120,6 @@ public class KnapsackGenMain {
                 }//end try
                 System.out.println("File " + name + " write successfully");
             }//end String
-
-
     }//end class
 
 }
