@@ -37,7 +37,7 @@ public class FractionalBruteForce extends AlgorithmParent{
 
 
         long endTimer = super.endTimer();
-        return new TestResult(name, knapsackNum, Math.round(bestMax * 100.0) / 100.0, endTimer);
+        return new TestResult(name,knapsack,  Math.round(bestMax * 100.0) / 100.0, endTimer);
     }
 
     /**

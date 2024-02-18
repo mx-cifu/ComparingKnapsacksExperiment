@@ -1,6 +1,9 @@
 import KnapsackGenPackage.Knapsack;
 import KnapsackGenPackage.KnapsackGenMain;
+import KnapsackGenPackage.TerminalOutput;
 import SelectingAlgoPackage.Dynamic01KnapSack;
+import SelectingAlgoPackage.FractionalBruteForce;
+import SelectingAlgoPackage.FractionalGreedy;
 import SelectingAlgoPackage.TestResult;
 
 import java.io.FileNotFoundException;
@@ -9,22 +12,31 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
+        TerminalOutput term = new TerminalOutput();
+        term.printIntro();
         KnapsackGenMain m = new KnapsackGenMain(false);
         ArrayList<Knapsack> k = m.getKnapList();
         Dynamic01KnapSack d = new Dynamic01KnapSack();
-        ArrayList<TestResult> trList = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> il = new ArrayList<>();
+        FractionalBruteForce fbf = new FractionalBruteForce();
+        FractionalGreedy fg = new FractionalGreedy();
+        ArrayList<TestResult> dynamicTest = new ArrayList<>();
+        ArrayList<TestResult> fbfTest = new ArrayList<>();
+        ArrayList<TestResult> fgTest = new ArrayList<>();
+
         for(Knapsack sack : k){
-                    trList.add(d.solveKnapsack(sack));
-                    il.add(d.getItemsNumbers());
+            dynamicTest.add(d.solveKnapsack(sack));
+            fbfTest.add(fbf.solveKnapsack(sack));
+            fgTest.add(fg.solveKnapsack(sack));
         }
         int index = 0;
-        for(TestResult tr: trList){
-            System.out.println(tr.getAlgorithmName());
-            System.out.println(tr.getTime() + " was the time it took to solve");
-            System.out.println(tr.getTotalValue() + " was the total value in the end");
-            System.out.println(il.get(index));
+        for(TestResult dt : dynamicTest){
+            term.printProblemSet(k.get(index), index + 1, 4);
+            term.printTestResults(dt);
+            term.printTestResults(fbfTest.get(index));
+            term.printTestResults(fgTest.get(index));
             index++;
+
         }
+
     }
 }

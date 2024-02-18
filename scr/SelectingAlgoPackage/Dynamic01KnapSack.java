@@ -56,7 +56,10 @@ public class Dynamic01KnapSack extends AlgorithmParent {
         int [][] x = getxArray(n, targetWeight, profitArray, weightArray);
         this.itemsNumbers = getItems(x, weightArray, n, targetWeight);
         long timeEnd = super.endTimer();
-        TestResult t = new TestResult(sacName, sack.getKnapsackNum(), x[n][targetWeight],endTimer());
+        TestResult t = new TestResult(sacName, sack, x[n][targetWeight],endTimer());
+        for(Integer num : itemsNumbers){
+            t.addItemsUsed(sack.getItems().get(num - 1),sack.getItems().get(num - 1).getWt());
+        }
         return t;
     }//end class
 
