@@ -17,6 +17,7 @@ public class Main {
         //01knapSack
         DynamicKnapSack dynamic = new DynamicKnapSack();
         Greedy01KnapSack greedy01 = new Greedy01KnapSack();
+        BruteForce01Knapsack brute01 = new BruteForce01Knapsack();
         ArrayList<TestResult> O1Results = new ArrayList<>();
 
         CSVOutput csv = new CSVOutput();
@@ -31,6 +32,7 @@ public class Main {
         //test arrays
         ArrayList<TestResult> dynamicTest = new ArrayList<>();
         ArrayList<TestResult> greedyTest01 = new ArrayList<>();
+        ArrayList<TestResult> bruteTest01 = new ArrayList<>();
 
         ArrayList<TestResult> fractionalDynamicTest = new ArrayList<>();
         ArrayList<TestResult> fractionalBruteForceTest = new ArrayList<>();
@@ -43,6 +45,10 @@ public class Main {
             TestResult gred = greedy01.solveKnapsack(sack);
             greedyTest01.add(gred);
             csv.add01(gred);
+            TestResult brute = brute01.solveKnapsack(sack);
+            bruteTest01.add(brute);
+            csv.add01(brute);
+
 
             TestResult fracDyn = fractionalDynamic.solveKnapsack(sack);
             fractionalDynamicTest.add(fracDyn);
@@ -68,6 +74,7 @@ public class Main {
             term.printProblemSet(sack,index + 1,4);
             term.printTestResults(dynamicTest.get(index));
             term.printTestResults(greedyTest01.get(index));
+            term.printTestResults(bruteTest01.get(index));
             //two other test go here
 
             index ++;
