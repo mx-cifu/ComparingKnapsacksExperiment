@@ -1,13 +1,12 @@
 import KnapsackGenPackage.Knapsack;
 import KnapsackGenPackage.KnapsackGenMain;
 import KnapsackGenPackage.TerminalOutput;
-import SelectingAlgoPackage.Dynamic01KnapSack;
+import SelectingAlgoPackage.DynamicKnapSack;
 import SelectingAlgoPackage.FractionalBruteForce;
 import SelectingAlgoPackage.FractionalGreedy;
 import SelectingAlgoPackage.TestResult;
 
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Main {
@@ -16,27 +15,52 @@ public class Main {
         term.printIntro();
         KnapsackGenMain m = new KnapsackGenMain(true);
         ArrayList<Knapsack> k = m.getKnapList();
-        Dynamic01KnapSack d = new Dynamic01KnapSack();
-        FractionalBruteForce fbf = new FractionalBruteForce();
-        FractionalGreedy fg = new FractionalGreedy();
-        ArrayList<TestResult> dynamicTest = new ArrayList<>();
-        ArrayList<TestResult> fbfTest = new ArrayList<>();
-        ArrayList<TestResult> fgTest = new ArrayList<>();
 
+        //01knapSack
+        DynamicKnapSack dynamic = new DynamicKnapSack();
+
+
+        //fractional
+        DynamicKnapSack fractionalDynamic = new DynamicKnapSack(true);
+        FractionalBruteForce fractionalBruteForce = new FractionalBruteForce();
+        FractionalGreedy fractionalGreedy = new FractionalGreedy();
+
+        //test arrays
+        ArrayList<TestResult> dynamicTest = new ArrayList<>();
+
+        ArrayList<TestResult> fractionalDynamicTest = new ArrayList<>();
+        ArrayList<TestResult> fractionalBruteForceTest = new ArrayList<>();
+        ArrayList<TestResult> fractionalGreedyTest = new ArrayList<>();
         //o1 knapsack
         for(Knapsack sack : k){
-            dynamicTest.add(d.solveKnapsack(sack));
-            fbfTest.add(fbf.solveKnapsack(sack));
-            fgTest.add(fg.solveKnapsack(sack));
-        }
-        int index = 0;
-        for(TestResult dt : dynamicTest){
-            term.printProblemSet(k.get(index), index + 1, 4);
-            term.printTestResults(dt);
-            term.printTestResults(fbfTest.get(index));
-            term.printTestResults(fgTest.get(index));
-            index++;
+            dynamicTest.add(dynamic.solveKnapsack(sack));
+
+            fractionalDynamicTest.add(fractionalDynamic.solveKnapsack(sack));
+            fractionalBruteForceTest.add(fractionalBruteForce.solveKnapsack(sack));
+            fractionalGreedyTest.add(fractionalGreedy.solveKnapsack(sack));
         }
 
+        term.printTitle("01Knapsack Algorithms");
+
+
+        //print results for 01Knapsack
+        int index = 0;
+        for(Knapsack sack : k){
+            term.printProblemSet(sack,index + 1,4);
+            term.printTestResults(dynamicTest.get(index));
+            //two other test go here
+            index ++;
+        }
+
+        term.printTitle("Fractional Knapsack Algorithms");
+
+        index = 0;
+        for(Knapsack sack : k) {
+            term.printProblemSet(sack, index + 1, 4);
+            term.printTestResults(fractionalDynamicTest.get(index));
+            term.printTestResults(fractionalGreedyTest.get(index));
+            term.printTestResults(fractionalBruteForceTest.get(index));
+            index++;
+        }
     }
 }
