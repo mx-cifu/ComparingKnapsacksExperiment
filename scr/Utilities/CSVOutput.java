@@ -16,21 +16,21 @@ public class CSVOutput {
 
     /**
      * Creates and initializes the fields of a CSVOutput object
-     * @param testResults01 results of the 01 knapsack
-     * @param testResultsFract results of the fractional knapsack
      */
-    public CSVOutput(ArrayList<TestResult> testResults01, ArrayList<TestResult> testResultsFract) {
-        this.testResults01 = testResults01;
-        this.testResultsFract = testResultsFract;
+    public CSVOutput() {
+        this.testResults01 = new ArrayList<>();
+        this.testResultsFract = new ArrayList<>();
 
     }
+
+
 
     /**
      * Creates the file, and writes into it. Calling other classes as needed to perform its work. This method must be
      * directly called by the user through the CSVOutput object in order to start the work of writing.
      */
     public void createFile() {
-        File sackFile = new File("Comparing_Knapsacks_Results");
+        File sackFile = new File("data/data_Results/Comparing_Knapsacks_Results");
         boolean success = false;
 
         try {
@@ -201,6 +201,15 @@ public class CSVOutput {
 
         return testResultsValue;
     }
+
+    public void add01(TestResult results) {
+        testResults01.add(results);
+    }
+
+    public void addFract(TestResult results) {
+        testResultsFract.add(results);
+    }
+
 
 }
 

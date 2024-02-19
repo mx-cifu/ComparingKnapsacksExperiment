@@ -19,7 +19,7 @@ public class Main {
         Greedy01KnapSack greedy01 = new Greedy01KnapSack();
         ArrayList<TestResult> O1Results = new ArrayList<>();
 
-        CSVoutput csv = new CSVOutput();
+        CSVOutput csv = new CSVOutput();
 
 
         //fractional
@@ -37,20 +37,23 @@ public class Main {
         ArrayList<TestResult> fractionalGreedyTest = new ArrayList<>();
         //o1 knapsack
         for(Knapsack sack : k){
-            dynamicTest.add(dynamic.solveKnapsack(sack));
-            greedyTest01.add(greedy01.solveKnapsack(sack));
+            TestResult dyn = dynamic.solveKnapsack(sack);
+            dynamicTest.add(dyn);
+            csv.add01(dyn);
+            TestResult gred = greedy01.solveKnapsack(sack);
+            greedyTest01.add(gred);
+            csv.add01(gred);
 
-            fractionalDynamicTest.add(fractionalDynamic.solveKnapsack(sack));
-            fractionalBruteForceTest.add(fractionalBruteForce.solveKnapsack(sack));
-            fractionalGreedyTest.add(fractionalGreedy.solveKnapsack(sack));
+            TestResult fracDyn = fractionalDynamic.solveKnapsack(sack);
+            fractionalDynamicTest.add(fracDyn);
+            csv.addFract(fracDyn);
+            TestResult fracBru = fractionalBruteForce.solveKnapsack(sack);
+            fractionalBruteForceTest.add(fracBru);
+            csv.addFract(fracBru);
+            TestResult fracGred = fractionalGreedy.solveKnapsack(sack);
+            fractionalGreedyTest.add(fracGred);
+            csv.addFract(fracGred);
         }
-        csv.addO1(dynamicTest);
-        csv.add01(greedyTest01);
-        csv.add01(bruteForce);
-
-        csv.addFrac(fractionalBruteForce);
-        csv.addFrac(fractionalDynamic);
-        csv.addFrac(fractionalGreedyTest);
 
         csv.createFile();
 
@@ -81,7 +84,7 @@ public class Main {
                     index++;
         }
 
-        CSVOutput
+
 
     }
 }
