@@ -37,7 +37,7 @@ public class BruteForce01Knapsack extends AlgorithmParent{
 
         // add all items from selected items to results, set maximum value, and return results
         for (Item item : selectedItems) {
-            result.addItemsUsed(item, 1);
+            result.addItemsUsed(item, item.getWt());
         }
         result.adjustVal(totalValue);
         return result;
