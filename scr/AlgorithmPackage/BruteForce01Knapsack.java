@@ -1,7 +1,7 @@
 package AlgorithmPackage;
 
-import KnapsackGenPackage.Item;
-import KnapsackGenPackage.Knapsack;
+import Utilities.Item;
+import Utilities.Knapsack;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
