@@ -10,6 +10,8 @@ public class FractionalBruteForce extends AlgorithmParent{
     // keeps track of the best max value so far
     private double bestMax;
     private ArrayList<Item> bestCombo;
+    private Item fractItem;
+    private int amtTaken;
 
 
 
@@ -24,20 +26,25 @@ public class FractionalBruteForce extends AlgorithmParent{
     @Override
     public TestResult solveKnapsack(Knapsack knapsack) {
         String name = "Fractional Brute Force Algorithm";
-        int knapsackNum = knapsack.getKnapsackNum();
         int knapsackWtLeft = knapsack.getMaximumCapacity();
         ArrayList<Item> items = knapsack.getItems();
 
+        bestMax = 0;
+        amtTaken = 0;
+        fractItem = null;
         // start time
         startTimer();
-
+        TestResult results = new TestResult(name,knapsack,  0, 0);
         // explore the different item combinations possible to retrieve the best max value
         exploreCombos(items, 0, new ArrayList<>(), 0, knapsackWtLeft);
 
-
-
-        long endTimer = super.endTimer();
-        return new TestResult(name,knapsack,  Math.round(bestMax * 100.0) / 100.0, endTimer);
+        for (Item oneItem : bestCombo) {
+            results.addItemsUsed(oneItem, oneItem.getWt());
+        }
+        results.addItemsUsed(fractItem, amtTaken);
+        results.adjustVal(Math.round(bestMax * 100.0)/100.0);
+        results.adjustTime(super.endTimer());
+        return results;
     }
 
     /**
@@ -88,6 +95,8 @@ public class FractionalBruteForce extends AlgorithmParent{
     private double addFractionalItem(ArrayList<Item> items, ArrayList<Item> currentCombo, int currentWt, int maxCapacity, double currentComboValue) {
         double remainingCapacity = maxCapacity - currentWt;
         double bestFractionalValue = 0;
+        Item tempFractItem = null;
+        int tempAmtTaken = 0;
         // iterate through the items of the knapsack, and exclude consideration of items already present within the
         // current combination of items
         for (Item item : items) {
@@ -99,9 +108,17 @@ public class FractionalBruteForce extends AlgorithmParent{
                 }
                 if (potentialFractionalValue > bestFractionalValue) {
                     bestFractionalValue = potentialFractionalValue; // update the best fractional item value if needed
+                    tempFractItem = item;
+                    tempAmtTaken = maxCapacity - currentWt;
                 }
             }
         }
+
+        if (currentComboValue + bestFractionalValue > bestMax) {
+            fractItem = tempFractItem;
+            amtTaken = tempAmtTaken;
+        }
+
         return currentComboValue + bestFractionalValue; // Return the total value including the best fractional addition
     }
 
@@ -117,4 +134,8 @@ public class FractionalBruteForce extends AlgorithmParent{
         }
         return totalVal;
     }
+
+
+
+
 }

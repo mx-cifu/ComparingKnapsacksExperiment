@@ -91,4 +91,12 @@ public class TestResult {
     public LinkedHashMap<Item, Integer> getItemsUsed(){
         return this.itemsUsed;
     }
+
+    public void adjustTime(long newTime){
+        time = newTime;
+    }
+
+    public void adjustVal(double newVal) {
+        totalValue = newVal;
+    }
 }
