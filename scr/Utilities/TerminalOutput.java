@@ -1,10 +1,8 @@
-package KnapsackGenPackage;
+package Utilities;
 
-import SelectingAlgoPackage.TestResult;
+import AlgorithmPackage.TestResult;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Iterator;
 
 public class TerminalOutput {
@@ -75,7 +73,12 @@ public class TerminalOutput {
     /**
      * O(n) for the number of items in test,
      * This will print the unique test results that will show how the
-     * algorithm time and accuracy was.
+     * algorithm time and accuracy.
+     * One bug with this method is that if there is a
+     * value/weight pair that is the same, it will only count the
+     * first item, reason being the Item object does not contain the item
+     * number.Hence, we iterate though the items looking for the item and
+     * reference its number
      * @param t is the test result object
      */
     public void printTestResults(TestResult t) {
@@ -89,25 +92,15 @@ public class TerminalOutput {
         Iterator<Item> keyIter = t.getItemsUsed().keySet().iterator();
         while(keyIter.hasNext()){
             Item item = keyIter.next();
+            int itemNumber = item.getItemNumber() + 1;
             int value = item.getVal();
             int weight = item.getWt();
             int numberItemsUsed = t.getItemsUsed().get(item);
             double benifit = (double) value/weight;
-            double usedCapacity = benifit * numberItemsUsed;
+            double valueUsed = benifit * numberItemsUsed;
             capacityUsed += numberItemsUsed;
-            int itemNumber = 0;
-            //get Item number
-            int itemNumberIndex = 0;
-            boolean done = false;
-            while(!done){
-                if(value == k.getItems().get(itemNumberIndex).getVal() && weight == k.getItems().get(itemNumberIndex).getWt()){
-                    itemNumber = itemNumberIndex + 1;
-                    done = true;
-                }//
-                itemNumberIndex++;
-            }//end while
                     resultTuple.append("Item # " + itemNumber + " : (" + value + ", " + weight + ")" +
-                            " \t | Used " + numberItemsUsed  + " items for " + Math.round(usedCapacity * 100.0)/100.0 + "\n");
+                            " \t | Used " + numberItemsUsed  + " items for " + Math.round(valueUsed * 100.0)/100.0 + "\n");
         }//end while loop
 
 

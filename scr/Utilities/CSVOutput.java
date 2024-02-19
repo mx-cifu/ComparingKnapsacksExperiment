@@ -1,10 +1,11 @@
-import SelectingAlgoPackage.TestResult;
+package Utilities;
+
+import AlgorithmPackage.TestResult;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class CSVOutput {
 
@@ -16,7 +17,7 @@ public class CSVOutput {
 
 
     public void createFile() {
-        File sackFile = new File("Comparing_Knapsacks_Results");
+        File sackFile = new File("data/data_Results/Comparing_Knapsacks_Results");
         boolean success = false;
 
         try {

@@ -1,0 +1,9 @@
+Time
+n, Brute Force, Dynamic, Greedy
+5, 412500, 48800, 53900
+20, 134700, 95100, 113300
+
+Value
+n, Brute Force, Dynamic, Greedy
+5, 38.0, 204.0, 218.0
+20, 381.0, 380.0, 555.0

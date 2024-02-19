@@ -1,7 +1,7 @@
-package SelectingAlgoPackage;
+package AlgorithmPackage;
 
-import KnapsackGenPackage.Item;
-import KnapsackGenPackage.Knapsack;
+import Utilities.Item;
+import Utilities.Knapsack;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -103,7 +103,6 @@ public class DynamicKnapSack extends AlgorithmParent {
         boolean done = false;
         int r = fItem.size();
         int c = sack.getMaximumCapacity();
-        double totalProfit = 0;
         itemsNumbers = new ArrayList<>();
         while(!done){
             if(r <= 0 || c <= 0){
@@ -114,8 +113,7 @@ public class DynamicKnapSack extends AlgorithmParent {
             }else{
                 //we found a difference in to the higher number
                 //find the items we used
-                itemsNumbers.add(itemNum[itemNum.length - r]);
-                totalProfit = totalProfit + x[r][c];
+                itemsNumbers.add(itemNum[r]);
                 // move to the left the amount of weight we just added to sack and up one.
                 c--;
                 //move up one row
@@ -156,12 +154,12 @@ public class DynamicKnapSack extends AlgorithmParent {
         for (int row = 1; row < n + 1; row++) {
             for (int column = 1; column < maxWeight + 1; column++) {
                 double profit = profitArray[row];
-                int current_weight = 1;
+
                 //just in case the weight pushes us to negative
                 //indexes
 
-                if (column - current_weight >= 0 ) {
-                    double rowUpWeightBack_profit = x[row - 1][column - current_weight];
+                if (column - 1 >= 0 ) {
+                    double rowUpWeightBack_profit = x[row - 1][column - 1];
                     x[row][column] = Math.max(x[row - 1][column], rowUpWeightBack_profit + profit);
                 }else {
                     x[row][column] = x[row - 1][column];
