@@ -27,7 +27,7 @@ public class TerminalOutput {
         System.out.println("1. Brute Force\n2. Greedy Algorithm (even thought this could be wrong)\n3. Dynamic program\n");
         System.out.println("The following algorithms will be tested for the fractional Knapsack: ");
         System.out.println("1.Brute force\n2. Greedy Algorithm\n3. Dynamic");
-        System.out.println("Starting Test");
+        System.out.println("Starting Test\n");
     }//end intro
 
     public void printTitle(String title){
@@ -48,7 +48,7 @@ public class TerminalOutput {
         printLine("=", 40);
         System.out.println("Maximum Capacity: " + k.getMaximumCapacity());
         System.out.println("number of items: " + length);
-        System.out.println("Items tuples (v, w)");
+        System.out.println("Items tuples (w, v)");
         printLine("-", 40);
         ArrayList itemList = k.getItems();
         for(int i = 0; i < length; i += perLine){
@@ -62,7 +62,7 @@ public class TerminalOutput {
                 if(length - j == 1){
                     System.out.print(" " + item.getWt() + ") ");
                 }else {
-                    System.out.print(" " + item.getWt() + "), ");
+                    System.out.print(" " + item.getVal() + "), ");
                 }
             }//end for
             System.out.println("");
@@ -99,8 +99,8 @@ public class TerminalOutput {
             double benifit = (double) value/weight;
             double valueUsed = benifit * numberItemsUsed;
             capacityUsed += numberItemsUsed;
-                    resultTuple.append("Item # " + itemNumber + " : (" + value + ", " + weight + ")" +
-                            " \t | Used " + numberItemsUsed  + " items for " + Math.round(valueUsed * 100.0)/100.0 + "\n");
+                    resultTuple.append("Item # " + itemNumber + " : (" + weight + ", " + value + ")" +
+                            " \t | Consumed: Weight (" + numberItemsUsed  + " out of " + weight + ") value (" + Math.round(valueUsed * 100.0)/100.0 + ")\n");
         }//end while loop
 
 
@@ -109,7 +109,7 @@ public class TerminalOutput {
         printLine("_", 40);
         System.out.println("Run Time: " + t.getTime());
         System.out.println("Capacity Used: " + capacityUsed + " (" + k.getMaximumCapacity() + " max Capacity)");
-        System.out.println("Items used for Project (v, w)");
+        System.out.println("Items used for Project (w, v)");
         System.out.println(resultTuple.toString());
         System.out.println("Total Profit: " + t.getTotalValue());
         printLine("=", 40);

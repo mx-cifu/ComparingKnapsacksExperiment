@@ -97,18 +97,19 @@ public class KnapsackGenMain {
                 String fName = "data/data_input/inputs" + (i + 4) + ".csv";
                 String name = String.valueOf(i + 4);
                 StringWriter csvInput = new StringWriter();
+                String operation = "update ";
                 int weight = 100;// the highest weight will be 30
                 //first line test number and weight allowed
                 csvInput.append(name + "," + weight + ",\n");
                 //get the random number for the first line
 
                 for (int l1 = 0; l1 < i * 5 + 20; l1++) {
-                    String l1Num = String.valueOf(r.nextInt(weight + 10));
+                    String l1Num = String.valueOf(r.nextInt(weight + 10) + 1);
                     csvInput.append(l1Num + ",");
                 }//end for
                 csvInput.append("\n");
                 for (int l2 = 0; l2 < i * 5 + 20; l2++) {
-                    String l2Num = String.valueOf(r.nextInt(weight + 10));
+                    String l2Num = String.valueOf(r.nextInt(weight + 10) + 1);
                     csvInput.append(l2Num + ",");
                 }
                 try {
@@ -118,8 +119,9 @@ public class KnapsackGenMain {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }//end try
-                System.out.println("File " + name + " write successfully");
+                System.out.println("File " + name + " " + operation + " successful");
             }//end String
+            System.out.println("");
     }//end class
 
 }

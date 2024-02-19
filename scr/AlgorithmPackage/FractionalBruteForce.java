@@ -40,7 +40,9 @@ public class FractionalBruteForce extends AlgorithmParent{
         for (Item oneItem : bestCombo) {
             results.addItemsUsed(oneItem, oneItem.getWt());
         }
-        results.addItemsUsed(fractItem, amtTaken);
+        if(fractItem != null) {
+            results.addItemsUsed(fractItem, amtTaken);
+        }//end if
         results.adjustVal(Math.round(bestMax * 100.0)/100.0);
         results.adjustTime(super.endTimer());
         return results;
