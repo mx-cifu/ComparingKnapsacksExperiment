@@ -40,6 +40,9 @@ public class Main {
             fractionalGreedyTest.add(fractionalGreedy.solveKnapsack(sack));
         }
 
+        term.printTitle("01Knapsack Algorithms");
+
+
         //print results for 01Knapsack
         int index = 0;
         for(Knapsack sack : k){
@@ -48,6 +51,8 @@ public class Main {
             //two other test go here
             index ++;
         }
+
+        term.printTitle("Fractional Knapsack Algorithms");
 
         index = 0;
         for(Knapsack sack : k) {

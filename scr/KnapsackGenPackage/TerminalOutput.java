@@ -28,10 +28,15 @@ public class TerminalOutput {
         System.out.println("The following algorithms will be tested for the 01 Knapsack: ");
         System.out.println("1. Brute Force\n2. Greedy Algorithm (even thought this could be wrong)\n3. Dynamic program\n");
         System.out.println("The following algorithms will be tested for the fractional Knapsack: ");
-        System.out.println("1. Brute force\n2. Greedy Algorithm\n");
+        System.out.println("1.Brute force\n2. Greedy Algorithm\n3. Dynamic");
         System.out.println("Starting Test");
     }//end intro
 
+    public void printTitle(String title){
+        this.printLine("#", 40);
+        System.out.print("\n" + title + "\n");
+        this.printLine("#", 40);
+    }
     /**
      * O(n) time to print the items to the screen.
      * Even though we are using a nested loop, we are iterating by three
