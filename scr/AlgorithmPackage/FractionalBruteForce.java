@@ -1,7 +1,7 @@
-package SelectingAlgoPackage;
+package AlgorithmPackage;
 
-import KnapsackGenPackage.Item;
-import KnapsackGenPackage.Knapsack;
+import Utilities.Item;
+import Utilities.Knapsack;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,6 @@ public class FractionalBruteForce extends AlgorithmParent{
         TestResult results = new TestResult(name,knapsack,  0, 0);
         // explore the different item combinations possible to retrieve the best max value
         exploreCombos(items, 0, new ArrayList<>(), 0, knapsackWtLeft);
-
         for (Item oneItem : bestCombo) {
             results.addItemsUsed(oneItem, oneItem.getWt());
         }

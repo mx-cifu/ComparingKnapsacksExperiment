@@ -1,6 +1,6 @@
-package SelectingAlgoPackage;
+package AlgorithmPackage;
 
-import KnapsackGenPackage.Knapsack;
+import Utilities.Knapsack;
 
 public abstract class AlgorithmParent {
 

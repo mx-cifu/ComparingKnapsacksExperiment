@@ -1,4 +1,4 @@
-package KnapsackGenPackage;
+package Utilities;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -71,7 +71,7 @@ public class KnapsackGenMain {
                         int weight = Integer.parseInt(f1[1]);
                         Knapsack knap = new Knapsack(weight, testNumber);
                         for (int i = 0; i < f2.length; i++) {
-                            Item item = new Item(Integer.parseInt(f2[i]), Integer.parseInt(f3[i]));
+                            Item item = new Item(Integer.parseInt(f2[i]), Integer.parseInt(f3[i]), i);
                             knap.addItem(item);
                         }//end for loop
                         knapList.add(knap);

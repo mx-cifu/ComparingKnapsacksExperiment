@@ -1,10 +1,11 @@
-import KnapsackGenPackage.Knapsack;
-import KnapsackGenPackage.KnapsackGenMain;
-import KnapsackGenPackage.TerminalOutput;
-import SelectingAlgoPackage.DynamicKnapSack;
-import SelectingAlgoPackage.FractionalBruteForce;
-import SelectingAlgoPackage.FractionalGreedy;
-import SelectingAlgoPackage.TestResult;
+import Utilities.CSVOutput;
+import Utilities.Knapsack;
+import Utilities.KnapsackGenMain;
+import Utilities.TerminalOutput;
+import AlgorithmPackage.DynamicKnapSack;
+import AlgorithmPackage.FractionalBruteForce;
+import AlgorithmPackage.FractionalGreedy;
+import AlgorithmPackage.TestResult;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class Main {
             fractionalGreedyTest.add(fractionalGreedy.solveKnapsack(sack));
         }
 
+        CSVOutput csv = new CSVOutput(dynamicTest);
+        csv.createFile();
         term.printTitle("01Knapsack Algorithms");
 
 
@@ -49,6 +52,7 @@ public class Main {
             term.printProblemSet(sack,index + 1,4);
             term.printTestResults(dynamicTest.get(index));
             //two other test go here
+
             index ++;
         }
 
@@ -60,7 +64,8 @@ public class Main {
             term.printTestResults(fractionalDynamicTest.get(index));
             term.printTestResults(fractionalGreedyTest.get(index));
             term.printTestResults(fractionalBruteForceTest.get(index));
-            index++;
+                    index++;
         }
+
     }
 }

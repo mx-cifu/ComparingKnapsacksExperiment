@@ -1,11 +1,9 @@
-package SelectingAlgoPackage;
+package AlgorithmPackage;
 
-import KnapsackGenPackage.Item;
-import KnapsackGenPackage.Knapsack;
+import Utilities.Item;
+import Utilities.Knapsack;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.LinkedHashMap;
 
 public class TestResult {
@@ -42,8 +40,8 @@ public class TestResult {
 
     /**
      * O(1)
-     * Will add results to the testresult for the items used and
-     * the numebr of items for that item
+     * Will add results to the test result for the items used and
+     * the number of items for that item
      * @param item is the item that was used
      * @param numberUsed how many of that item were used.
      */
