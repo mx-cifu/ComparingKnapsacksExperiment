@@ -3,19 +3,18 @@ package SelectingAlgoPackage;
 import KnapsackGenPackage.Item;
 import KnapsackGenPackage.Knapsack;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Dynamic01KnapSack extends AlgorithmParent {
-    private ArrayList<Integer> itemsNumbers;
+public class DynamicKnapSack extends AlgorithmParent {
+
     private boolean fracBool;
 
     /**
      * Set S of n items with benefit b
      * and weight w, max weight mw
      */
-    public Dynamic01KnapSack(){
+    public DynamicKnapSack(){
         this(false);
     }
 
@@ -24,12 +23,8 @@ public class Dynamic01KnapSack extends AlgorithmParent {
      * part
      * @param fracBool
      */
-    public Dynamic01KnapSack(boolean fracBool){
+    public DynamicKnapSack(boolean fracBool){
         this.fracBool = fracBool;
-    }
-
-    public ArrayList<Integer> getItemsNumbers(){
-        return this.itemsNumbers;
     }
 
     /**
@@ -41,7 +36,8 @@ public class Dynamic01KnapSack extends AlgorithmParent {
      */
     @Override
     public TestResult solveKnapsack(Knapsack sack) {
-        if(!fracBool) {
+        if(!this.fracBool) {
+            ArrayList<Integer> itemsNumbers = new ArrayList<>();
             String sacName = "Dynamic Algorithm";
             //set the test up for right inputs
             int targetWeight = sack.getMaximumCapacity();
@@ -64,47 +60,103 @@ public class Dynamic01KnapSack extends AlgorithmParent {
             //run the test
             super.startTimer();
             int[][] x = getxArray(n, targetWeight, profitArray, weightArray);
-            this.itemsNumbers = getItems(x, weightArray, n, targetWeight);
+            itemsNumbers = getItems(x, weightArray, n, targetWeight);
             long timeEnd = super.endTimer();
-            TestResult t = new TestResult(sacName, sack, x[n][targetWeight], endTimer());
+            TestResult t = new TestResult(sacName, sack, Math.round(x[n][targetWeight] * 100.0)/100.0, endTimer());
             for (Integer num : itemsNumbers) {
                 t.addItemsUsed(sack.getItems().get(num - 1), sack.getItems().get(num - 1).getWt());
-                return t;
             }
+            return t;
         }else{
             TestResult t = fSolveKnapsack(sack);
+            return t;
         }
-        return null;
+
     }//end class
 
+    /**
+     * O(17 + m(3) + mn) where m represents the number of items
+     * (broken down to a single weight) and n is for the weight.
+     * This method will break apart the items to a single
+     * unit of wight and then run them thought the dynamic program to find the
+     * optimal solution.
+     * @param sack
+     * @return
+     */
     public TestResult fSolveKnapsack(Knapsack sack){
         ArrayList<fracItem> fItem= fractionalRebuild(sack);
-        int [] weight = new int[sack.getMaximumCapacity() + 1];
-        double [] val = new double[fItem.size()];
-        int [] itemNum = new int[fItem.size()];
-        weight[0] = 0;
+        ArrayList<Integer> itemsNumbers = new ArrayList<>();
+        double [] val = new double[fItem.size() + 1];
+        int [] itemNum = new int[fItem.size() + 1];
+
         val[0] = 0;
         itemNum[0] = 0;
         int index = 1;
         for(fracItem item : fItem){
-            weight[index] = item.getWt();
             val[index] = item.getval();
             itemNum [index] = item.getNumber();
+            index++;
         }
-        getxFracArray(fItem.size(), sack.getMaximumCapacity(),val, weight);
+        super.startTimer();
+        double [][] x = getxFracArray(fItem.size(), sack.getMaximumCapacity(),val);
+        //work backwards looking for the best values
+        boolean done = false;
+        int r = fItem.size();
+        int c = sack.getMaximumCapacity();
+        double totalProfit = 0;
+        itemsNumbers = new ArrayList<>();
+        while(!done){
+            if(r <= 0 || c <= 0){
+                done = true;
+            }else if(x[r][c] == x[r - 1][c]){
+                //move r and c to the next row above
+                r--;
+            }else{
+                //we found a difference in to the higher number
+                //find the items we used
+                itemsNumbers.add(itemNum[itemNum.length - r]);
+                totalProfit = totalProfit + x[r][c];
+                // move to the left the amount of weight we just added to sack and up one.
+                c--;
+                //move up one row
+                r--;
+            }//end if
+        }//end while, assumed that either r or c are 0
+        long t = super.endTimer();
+        TestResult test = new TestResult("Dynamic Fractional Algorithm", sack, Math.round(x[fItem.size()][sack.getMaximumCapacity()] * 100.0)/100.0, t);
 
+        //build the list for the items used
+        int [] count = new int[sack.getItems().size()];
+        for(Integer num : itemsNumbers){
+            count[num]++;
+        }
 
+        //take the count and then add that to the test results
+        for(int i = 0; i < count.length; i++){
+            if(count[i] > 0){
+                int weightUsed = count[i];
+                test.addItemsUsed(sack.getItems().get(i),weightUsed );
+            }//end if
+        }//end for
 
-        return null;
+        return test;
 
     }//end class
 
-    private double [][] getxFracArray(int n, int maxWeight, double [] profitArray, int [] weightArray) {
+    /**
+     * Will return double in the x array instead of integers, then we go thought the painfully process of
+     * back tracing looking for the optional solution ugg.
+     * @param n number of items broken down single units of weight
+     * @param maxWeight the max capacity of the container
+     * @param profitArray an array of double profits, this will be the unified per weight
+     * @return double matrix with values
+     */
+    private double [][] getxFracArray(int n, int maxWeight, double [] profitArray) {
         double[][] x = new double[n + 1][ maxWeight + 1];
         for (int row = 1; row < n + 1; row++) {
             for (int column = 1; column < maxWeight + 1; column++) {
                 double profit = profitArray[row];
-                int current_weight = weightArray[row];
+                int current_weight = 1;
                 //just in case the weight pushes us to negative
                 //indexes
 
@@ -198,8 +250,9 @@ public class Dynamic01KnapSack extends AlgorithmParent {
             for(int j = 0; j < weight; j++){
                 fracItem fi = new fracItem();
                 fi.setWt(1);
-                fi.setVal(i.getVal()/weight);
+                fi.setVal((double)i.getVal()/weight);
                 fi.setNumber(itemNumber);
+                fItem.add(fi);
             }//end for
             itemNumber++;
         }//end for

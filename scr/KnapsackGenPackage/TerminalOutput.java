@@ -81,23 +81,28 @@ public class TerminalOutput {
         Knapsack k = t.getKnapsack();
         ArrayList<Item> itemList = k.getItems();
         StringBuilder resultTuple = new StringBuilder();
-        Iterator keyIter = t.getItemsUsed().keySet().iterator();
+        Iterator<Item> keyIter = t.getItemsUsed().keySet().iterator();
         while(keyIter.hasNext()){
-            Item keys = (Item) keyIter.next();
-            capacityUsed += keys.getWt();
-            int index = 0;
+            Item item = keyIter.next();
+            int value = item.getVal();
+            int weight = item.getWt();
+            int numberItemsUsed = t.getItemsUsed().get(item);
+            double benifit = (double) value/weight;
+            double usedCapacity = benifit * numberItemsUsed;
+            capacityUsed += numberItemsUsed;
+            int itemNumber = 0;
+            //get Item number
+            int itemNumberIndex = 0;
             boolean done = false;
             while(!done){
-                if(keys.getWt() == k.getItems().get(index).getWt() &&
-                        keys.getVal() == k.getItems().get(index).getVal()){
-                   done = true;
-                }
-                index ++;
-            }
-            int numUsed = t.getItemsUsed().get(keys); //integer from the dic
-            double iBen =  numUsed * ((double)keys.getVal() / numUsed);
-            resultTuple.append("Item # " + index + " : (" + keys.getVal() + ", " + keys.getWt() + ")" +
-                    " \t | Used " +  numUsed + " items for " + iBen + "\n");
+                if(value == k.getItems().get(itemNumberIndex).getVal() && weight == k.getItems().get(itemNumberIndex).getWt()){
+                    itemNumber = itemNumberIndex + 1;
+                    done = true;
+                }//
+                itemNumberIndex++;
+            }//end while
+                    resultTuple.append("Item # " + itemNumber + " : (" + value + ", " + weight + ")" +
+                            " \t | Used " + numberItemsUsed  + " items for " + Math.round(usedCapacity * 100.0)/100.0 + "\n");
         }//end while loop
 
 
