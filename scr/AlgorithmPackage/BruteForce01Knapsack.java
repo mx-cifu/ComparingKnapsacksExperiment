@@ -69,7 +69,7 @@ public class BruteForce01Knapsack extends AlgorithmParent{
             // see maximum value that selected items and current item can produce
             List<Item> withItem = new ArrayList<>(selectedItems);
             withItem.add(currentItem);
-            int valueWithItem = currentItem.getVal() + solveKnapsack(knapsack, weight - currentItem.getWt(), number - 1, temp);
+            int valueWithItem = currentItem.getVal() + solveKnapsack(knapsack, weight - currentItem.getWt(), number - 1, withItem);
 
             // see maximum value that selected items without current item produce
             List<Item> withoutItem = new ArrayList<>(selectedItems);
