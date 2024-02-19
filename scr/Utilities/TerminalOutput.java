@@ -58,9 +58,9 @@ public class TerminalOutput {
             }
             for(int j = i; j < i + pline; j++){
                 Item item = k.getItems().get(j);
-                System.out.print("(" + item.getVal() + ",");
+                System.out.print("(" + item.getWt() + ",");
                 if(length - j == 1){
-                    System.out.print(" " + item.getWt() + ") ");
+                    System.out.print(" " + item.getVal() + ") ");
                 }else {
                     System.out.print(" " + item.getVal() + "), ");
                 }

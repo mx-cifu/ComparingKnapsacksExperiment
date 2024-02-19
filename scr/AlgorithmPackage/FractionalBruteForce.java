@@ -42,7 +42,7 @@ public class FractionalBruteForce extends AlgorithmParent{
         }
         if(fractItem != null) {
             results.addItemsUsed(fractItem, amtTaken);
-        }//end if
+        }
         results.adjustVal(Math.round(bestMax * 100.0)/100.0);
         results.adjustTime(super.endTimer());
         return results;
