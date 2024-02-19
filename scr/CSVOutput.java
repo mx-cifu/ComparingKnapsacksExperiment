@@ -4,17 +4,31 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+
 
 public class CSVOutput {
 
-    private ArrayList<TestResult> testResults;
+    // holds test results of the 01 knapsack problem
+    private ArrayList<TestResult> testResults01;
+    // holds test results of the fract knapsack problem
+    private ArrayList<TestResult> testResultsFract;
 
-    public CSVOutput(ArrayList<TestResult> testResults) {
-        this.testResults = testResults;
+
+    /**
+     * Creates and initializes the fields of a CSVOutput object
+     * @param testResults01 results of the 01 knapsack
+     * @param testResultsFract results of the fractional knapsack
+     */
+    public CSVOutput(ArrayList<TestResult> testResults01, ArrayList<TestResult> testResultsFract) {
+        this.testResults01 = testResults01;
+        this.testResultsFract = testResultsFract;
+
     }
 
-
+    /**
+     * Creates the file, and writes into it. Calling other classes as needed to perform its work. This method must be
+     * directly called by the user through the CSVOutput object in order to start the work of writing.
+     */
     public void createFile() {
         File sackFile = new File("Comparing_Knapsacks_Results");
         boolean success = false;
@@ -28,7 +42,9 @@ public class CSVOutput {
             }
 
             try (FileWriter writeFile = new FileWriter(sackFile)) {
-                success = writeResults(writeFile);
+                success = writeResults01(writeFile);
+                writeFile.write("\n\n");
+                success = writeResultsFract(writeFile);
             }
 
         } catch (IOException e) {
@@ -42,19 +58,28 @@ public class CSVOutput {
 
     }
 
-    private boolean writeResults(FileWriter file) throws IOException {
+    /**
+     * Writes the results of the 01 knapsack into the file, formatting it properly and cleanly
+     * @param file FileWriter object to perform the writing
+     * @return true if successfully written into the file; otherwise, false
+     * @throws IOException if the FileWriter object is invalid, this method will throw an exception
+     */
 
-        long[] timeResults = getTestResultsTime();
-        double[] valueResults = getTestResultsValue();
+    private boolean writeResults01(FileWriter file) throws IOException {
+
+        long[] timeResults = getTestResultsTime(testResults01);
+        double[] valueResults = getTestResultsValue(testResults01);
         StringBuilder writtenResults = new StringBuilder();
-        writtenResults.append("Time\nn, Brute Force, Dynamic, Greedy");
-
+        writtenResults.append("Time");
+        for (int idx = 0; idx < 3; idx++) {
+            writtenResults.append(testResults01.get(idx).getAlgorithmName());
+        }
 
         for (int idx = 0; idx < timeResults.length; idx++) {
 
             if (idx % 3 == 0) {
                 writtenResults.append("\n");
-                writtenResults.append(testResults.get(idx).getKnapsack().getItems().size());
+                writtenResults.append(testResults01.get(idx).getKnapsack().getItems().size());
                 writtenResults.append(", ");
             }
 
@@ -64,15 +89,17 @@ public class CSVOutput {
             }
 
         }
-
-
-        writtenResults.append("\n\nValue\nn, Brute Force, Dynamic, Greedy");
+        writtenResults.append("\n\nValue\n");
+        for (int idx = 0; idx < 3; idx++) {
+            writtenResults.append(testResults01.get(idx).getAlgorithmName());
+            writtenResults.append(", ");
+        }
 
         for (int idx = 0; idx < valueResults.length; idx++) {
 
             if (idx % 3 == 0) {
                 writtenResults.append("\n");
-                writtenResults.append(testResults.get(idx).getKnapsack().getItems().size());
+                writtenResults.append(testResults01.get(idx).getKnapsack().getItems().size());
                 writtenResults.append(", ");
             }
 
@@ -83,35 +110,96 @@ public class CSVOutput {
 
         }
         file.write(writtenResults.toString());
-
         return true;
     }
 
-    private long[] getTestResultsTime() {
-        long[] testResultsTime = new long[testResults.size()];
+    /**
+     * Writes into a file the results of the fractional knapsacks, and the different algorithm's results
+     * @param file FileWriter object to perform the writing
+     * @return true if successfully written; otherwise, false
+     * @throws IOException If the FileWriter is invalid, this method will throw an exception
+     */
+    private boolean writeResultsFract(FileWriter file) throws IOException {
 
+        long[] timeResults = getTestResultsTime(testResultsFract);
+        double[] valueResults = getTestResultsValue(testResultsFract);
+        StringBuilder writtenResults = new StringBuilder();
+        writtenResults.append("Time\n");
+        for (int idx = 0; idx < 3; idx++) {
+            writtenResults.append(testResultsFract.get(idx).getAlgorithmName());
+            writtenResults.append(", ");
+        }
+
+        for (int idx = 0; idx < timeResults.length; idx++) {
+
+            if (idx % 3 == 0) {
+                writtenResults.append("\n");
+                writtenResults.append(testResultsFract.get(idx).getKnapsack().getItems().size());
+                writtenResults.append(", ");
+            }
+
+            writtenResults.append(timeResults[idx]);
+            if ((idx + 1) % 3 != 0) {
+                writtenResults.append(", ");
+            }
+
+        }
+
+        writtenResults.append("\n\nValue\n");
+        for (int idx = 0; idx < 3; idx++) {
+            writtenResults.append(testResultsFract.get(idx).getAlgorithmName());
+            writtenResults.append(", ");
+        }
+
+
+        for (int idx = 0; idx < valueResults.length; idx++) {
+
+            if (idx % 3 == 0) {
+                writtenResults.append("\n");
+                writtenResults.append(testResultsFract.get(idx).getKnapsack().getItems().size());
+                writtenResults.append(", ");
+            }
+
+            writtenResults.append(valueResults[idx]);
+            if ((idx + 1) % 3 != 0) {
+                writtenResults.append(", ");
+            }
+
+        }
+        file.write(writtenResults.toString());
+        return true;
+    }
+
+    /**
+     * Retrieves a long array of the time taken beach of the different algorithms to complete their sortings
+     * @param results ArrayList of TestResult
+     * @return an array of runtimes
+     */
+
+    private long[] getTestResultsTime(ArrayList<TestResult> results) {
+        long[] testResultsTime = new long[results.size()];
 
         for (int idx = 0; idx < testResultsTime.length; idx++ ) {
-            testResultsTime[idx] = testResults.get(idx).getTime();
+            testResultsTime[idx] = results.get(idx).getTime();
         }
 
         return testResultsTime;
     }
 
-    private double[] getTestResultsValue() {
-        double[] testResultsValue = new double[testResults.size()];
+    /**
+     * Retrieves an array of the profits gained by each of the different algorithms via an ArrayList of TestResults
+     * @param results ArrayList of TestResult
+     * @return an array of profit
+     */
+
+    private double[] getTestResultsValue(ArrayList<TestResult> results) {
+        double[] testResultsValue = new double[results.size()];
 
         for (int idx = 0; idx < testResultsValue.length; idx++) {
-            testResultsValue[idx] = testResults.get(idx).getTotalValue();
+            testResultsValue[idx] = results.get(idx).getTotalValue();
         }
 
         return testResultsValue;
-    }
-
-
-
-    public ArrayList<TestResult> getTestResults() {
-        return testResults;
     }
 
 }
