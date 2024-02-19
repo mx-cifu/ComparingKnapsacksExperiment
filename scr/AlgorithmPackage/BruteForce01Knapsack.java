@@ -1,4 +1,4 @@
-package SelectingAlgoPackage;
+package AlgorithmPackage;
 
 import KnapsackGenPackage.Item;
 import KnapsackGenPackage.Knapsack;
