@@ -70,7 +70,7 @@ public class CSVOutput {
         long[] timeResults = getTestResultsTime(testResults01);
         double[] valueResults = getTestResultsValue(testResults01);
         StringBuilder writtenResults = new StringBuilder();
-        writtenResults.append("Time\n");
+        writtenResults.append("Time, ");
         for (int idx = 0; idx < 3; idx++) {
             writtenResults.append(testResults01.get(idx).getAlgorithmName());
             writtenResults.append(", ");
@@ -90,7 +90,7 @@ public class CSVOutput {
             }
 
         }
-        writtenResults.append("\n\nValue\n");
+        writtenResults.append("\n\nValue, ");
         for (int idx = 0; idx < 3; idx++) {
             writtenResults.append(testResults01.get(idx).getAlgorithmName());
             writtenResults.append(", ");
@@ -125,7 +125,7 @@ public class CSVOutput {
         long[] timeResults = getTestResultsTime(testResultsFract);
         double[] valueResults = getTestResultsValue(testResultsFract);
         StringBuilder writtenResults = new StringBuilder();
-        writtenResults.append("Time\n");
+        writtenResults.append("Time, ");
         for (int idx = 0; idx < 3; idx++) {
             writtenResults.append(testResultsFract.get(idx).getAlgorithmName());
             writtenResults.append(", ");
@@ -146,7 +146,7 @@ public class CSVOutput {
 
         }
 
-        writtenResults.append("\n\nValue\n");
+        writtenResults.append("\n\nValue, ");
         for (int idx = 0; idx < 3; idx++) {
             writtenResults.append(testResultsFract.get(idx).getAlgorithmName());
             writtenResults.append(", ");
