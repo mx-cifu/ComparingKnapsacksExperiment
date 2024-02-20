@@ -70,9 +70,10 @@ public class CSVOutput {
         long[] timeResults = getTestResultsTime(testResults01);
         double[] valueResults = getTestResultsValue(testResults01);
         StringBuilder writtenResults = new StringBuilder();
-        writtenResults.append("Time");
+        writtenResults.append("Time\n");
         for (int idx = 0; idx < 3; idx++) {
             writtenResults.append(testResults01.get(idx).getAlgorithmName());
+            writtenResults.append(", ");
         }
 
         for (int idx = 0; idx < timeResults.length; idx++) {
