@@ -36,7 +36,8 @@ public class FractionalBruteForce extends AlgorithmParent{
         startTimer();
         TestResult results = new TestResult(name,knapsack,  0, 0);
         // explore the different item combinations possible to retrieve the best max value
-        exploreCombos(items, 0, new ArrayList<>(), 0, knapsackWtLeft);
+        ArrayList<ArrayList<Item>> combinations = new ArrayList<>();
+        findBestCombo(items, 0, new ArrayList<>(), 0, knapsackWtLeft, 0);
         for (Item oneItem : bestCombo) {
             results.addItemsUsed(oneItem, oneItem.getWt());
         }
@@ -59,7 +60,7 @@ public class FractionalBruteForce extends AlgorithmParent{
      * @param currentWt amount of weight that the knapsack is currently holding
      * @param maxCapacity max limit of the knapsack
      */
-    private void exploreCombos(ArrayList<Item> itemsList, int startIdx, ArrayList<Item> currentCombo, int currentWt, int maxCapacity) {
+    private void findBestCombo(ArrayList<Item> itemsList, int startIdx, ArrayList<Item> currentCombo, int currentWt, int maxCapacity, double currentVal) {
         // Establish what the current value of the current combination is
         double currentValue = calculateValue(currentCombo);
         if (currentWt <= maxCapacity) {
@@ -74,14 +75,33 @@ public class FractionalBruteForce extends AlgorithmParent{
         // enter into a loop exploring the different item
         for (int idx = startIdx; idx < itemsList.size(); idx++) {
             Item item = itemsList.get(idx);
-            int newWeight = currentWt + item.getWt();
-            // explore adding the new item if it fits into the knapsack whole, see if that creates the best combo
-            if (newWeight <= maxCapacity) {
+
+            if (currentWt + item.getWt() <= maxCapacity) {
                 currentCombo.add(item);
-                exploreCombos(itemsList, idx + 1, currentCombo, newWeight, maxCapacity);
-                currentCombo.remove(currentCombo.size() - 1); // Backtrack, remove the item
+                findBestCombo(itemsList, idx + 1, currentCombo, currentWt + item.getWt(),  maxCapacity,
+                        currentValue + item.getVal()); // explore what the best val would look like with that item
+                currentCombo.remove(currentCombo.size() - 1); // remove the item you just tested
+            }
+
+            double potentialVal = calculateFractionalVal(item, maxCapacity-currentWt);
+            if (potentialVal > 0) {
+                findBestCombo(itemsList, idx + 1, currentCombo, maxCapacity, maxCapacity,currentVal + potentialVal);
             }
         }
+    }
+
+    /**
+     * Finds the potential fractional value of a given object, along when given the remaining capacity
+     * @param item Item to find the value with the capacity limit
+     * @param remainCapacity remaining capacity left to fill
+     * @return the potential fractional value of the item
+     */
+    private double calculateFractionalVal(Item item, int remainCapacity) {
+        if (item.getWt() <= remainCapacity) {
+            return 0;
+        }
+        double fraction = Math.min(item.getWt(), remainCapacity / (double) item.getWt());
+        return fraction * item.getVal();
     }
 
     /**
@@ -137,6 +157,7 @@ public class FractionalBruteForce extends AlgorithmParent{
     }
 
 
+    }
 
 
-}
+
