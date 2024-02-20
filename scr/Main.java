@@ -1,15 +1,17 @@
 import AlgorithmPackage.*;
-import Utilities.CSVOutput;
-import Utilities.Knapsack;
-import Utilities.KnapsackGenMain;
-import Utilities.TerminalOutput;
+import Utilities.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        TerminalOutput term = new TerminalOutput();
+        KnapsackGenMain knapsackGenMain = new KnapsackGenMain(false);
+        TerminalOutput terminalOutput = new TerminalOutput();
+        CSVOutput csvOutput = new CSVOutput();
+        AlgorithmTester algorithmTester = new AlgorithmTester(knapsackGenMain, terminalOutput, csvOutput);
+        algorithmTester.runAlgorithms();
+        /** TerminalOutput term = new TerminalOutput();
         term.printIntro();
         KnapsackGenMain m = new KnapsackGenMain(false);
         ArrayList<Knapsack> k = m.getKnapList();
@@ -18,7 +20,6 @@ public class Main {
         DynamicKnapSack dynamic = new DynamicKnapSack();
         Greedy01KnapSack greedy01 = new Greedy01KnapSack();
         BruteForce01Knapsack brute01 = new BruteForce01Knapsack();
-        ArrayList<TestResult> O1Results = new ArrayList<>();
 
         CSVOutput csv = new CSVOutput();
 
@@ -89,6 +90,6 @@ public class Main {
             term.printTestResults(fractionalGreedyTest.get(index));
             term.printTestResults(fractionalBruteForceTest.get(index));
                     index++;
-        }
+        } **/
     }
 }
