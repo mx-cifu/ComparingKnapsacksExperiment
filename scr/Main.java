@@ -90,8 +90,5 @@ public class Main {
             term.printTestResults(fractionalBruteForceTest.get(index));
                     index++;
         }
-
-
-
     }
 }
