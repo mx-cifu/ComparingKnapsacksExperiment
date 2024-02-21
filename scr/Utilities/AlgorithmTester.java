@@ -30,6 +30,7 @@ public class AlgorithmTester {
         // set up array of algorithm objects
         algorithms = new AlgorithmParent[6];
 
+
         // 01 algorithms
         algorithms[0] = new DynamicKnapSack();
         algorithms[1] = new Greedy01KnapSack();
@@ -55,6 +56,9 @@ public class AlgorithmTester {
      */
     public void runAlgorithms() {
         terminalOutput.printIntro();
+        for(int j = 0; j < algorithms.length; j++) {
+            TestResult primer = algorithms[j].solveKnapsack(knapsacks.get(0));
+        }
 
         // perform tests on each algorithm
         for (Knapsack knapsack : knapsacks) {

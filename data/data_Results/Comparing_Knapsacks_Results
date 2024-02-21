@@ -1,30 +1,31 @@
-TimeDynamic AlgorithmKnapsack 01 Greedy AlgorithmDynamic Algorithm
-5, 598800, 548200, 62800
-10, 34000, 78000, 33000
-20, 93500, 28400, 120700
-25, 44700, 161400, 44800
+Time, Dynamic Algorithm, Knapsack 01 Greedy Algorithm, Knapsack 01 Brute Force Algorithm, 
+5, 11500, 6000, 73300
+10, 47400, 21000, 280600
+15, 121900, 25800, 121600
+20, 76000, 20900, 347000
+25, 93800, 38400, 590700
+30, 113300, 37600, 1828800
 
-Value
-Dynamic Algorithm, Knapsack 01 Greedy Algorithm, Dynamic Algorithm, 
-5, 38.0, 38.0, 204.0
-10, 204.0, 218.0, 216.0
-20, 464.0, 456.0, 207.0
-25, 188.0, 507.0, 459.0
+Value, Dynamic Algorithm, Knapsack 01 Greedy Algorithm, Knapsack 01 Brute Force Algorithm, 
+5, 38.0, 38.0, 38.0
+10, 204.0, 204.0, 204.0
+15, 218.0, 216.0, 218.0
+20, 277.0, 271.0, 277.0
+25, 294.0, 293.0, 294.0
+30, 666.0, 666.0, 666.0
 
-Time
-Dynamic Fractional Algorithm, Fractional Brute Force Algorithm, Fractional Greedy Algorithm, 
-5, 178700, 163700, 1172900
-10, 2872500, 509900, 38900
-15, 3098400, 104200, 33800
-20, 1639000, 2632800, 16000
-25, 2297300, 577500, 18400
-30, 997200, 9745700, 33900
+Time, Dynamic Fractional Algorithm, Fractional Brute Force Algorithm, Fractional Greedy Algorithm, 
+5, 140200, 66100, 8000
+10, 2571600, 1569900, 12900
+15, 2975600, 173500, 9900
+20, 2491200, 2631500, 13500
+25, 2313300, 5537900, 15100
+30, 590900, 24694100, 15200
 
-Value
-Dynamic Fractional Algorithm, Fractional Brute Force Algorithm, Fractional Greedy Algorithm, 
+Value, Dynamic Fractional Algorithm, Fractional Brute Force Algorithm, Fractional Greedy Algorithm, 
 5, 44.77, 44.77, 44.77
 10, 209.25, 209.25, 209.25
 15, 281.02, 281.02, 281.02
-20, 464.0, 464.0, 464.0
-25, 220.86, 220.86, 220.86
-30, 527.1, 527.1, 527.1
+20, 282.79, 282.79, 282.79
+25, 309.87, 309.87, 309.87
+30, 685.08, 685.08, 685.08

@@ -28,6 +28,8 @@ public class DynamicKnapSack extends AlgorithmParent {
     }
 
     /**
+     * O(17 + m(3) + mn) where m represents the number of items
+     * (broken down to a single weight) and n is for the weight.
      * Performs the knapsack algorithm on the given knapsack, and returns a SelectingAlgoPackage.TestResult
      * object containing the metadata and results. Should start timer at the beginning of method,
      * and return total time in SelectingAlgoPackage.TestResult.
@@ -56,6 +58,7 @@ public class DynamicKnapSack extends AlgorithmParent {
                 weightArray[index] = item.getWt();
                 index++;
             }//
+
 
             //run the test
             super.startTimer();
@@ -141,7 +144,9 @@ public class DynamicKnapSack extends AlgorithmParent {
 
     }//end class
 
-    /**
+    /**O( 2 + n( n * 4))
+     * O( 2 + n( n * 5 (worst case))
+     * Big O(n^2)
      * Will return double in the x array instead of integers, then we go thought the painfully process of
      * back tracing looking for the optional solution ugg.
      * @param n number of items broken down single units of weight
@@ -238,7 +243,17 @@ public class DynamicKnapSack extends AlgorithmParent {
         return x;
     }//end getxArray
 
-
+    /**
+     * (4 + n(m * 5 + 1))
+     * O(nm) where n is number of items and m total weight of all items.
+     * This method will take the given array and break it out to units of 1 instead of
+     * items. So each item will have a weight of 1 and x amount of items will be created.
+     * This is used by the fractional computation to find the most optimal solution of
+     * the knapsack problem set.
+     * @param k is the knapsack that will be rebuilt to the new sack
+     * @return will return an arraylist of the items in a fracItem that can be used by the fractional knapsack
+     * to identify the optimal solution.
+     */
     private ArrayList<fracItem> fractionalRebuild(Knapsack k){
         ArrayList<Item> item = k.getItems();
         ArrayList<fracItem> fItem = new ArrayList<>();

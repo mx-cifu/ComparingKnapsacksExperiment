@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         // create classes for performing algorithm tests and producing output
-        KnapsackGenMain knapsackGenMain = new KnapsackGenMain(false);
+        KnapsackGenMain knapsackGenMain = new KnapsackGenMain(true);
         TerminalOutput terminalOutput = new TerminalOutput();
         CSVOutput csvOutput = new CSVOutput();
 
