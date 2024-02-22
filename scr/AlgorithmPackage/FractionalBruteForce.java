@@ -32,12 +32,14 @@ public class FractionalBruteForce extends AlgorithmParent{
         bestMax = 0;
         amtTaken = 0;
         fractItem = null;
+        bestCombo = new ArrayList<>();
         // start time
         startTimer();
         TestResult results = new TestResult(name,knapsack,  0, 0);
         // explore the different item combinations possible to retrieve the best max value
         ArrayList<ArrayList<Item>> combinations = new ArrayList<>();
-        findBestCombo(items, 0, new ArrayList<>(), 0, knapsackWtLeft, 0);
+        //findBestCombo(items, 0, new ArrayList<>(), 0, knapsackWtLeft, 0);
+        findBestComboAndMax(items, knapsackWtLeft);
         for (Item oneItem : bestCombo) {
             results.addItemsUsed(oneItem, oneItem.getWt());
         }
@@ -53,7 +55,7 @@ public class FractionalBruteForce extends AlgorithmParent{
      * Method to explore recursively the different possible item combinations that can be created while following the
      * knapsack limitations and using the required items
      * NOTE: Due to fractions being infinite, I made the choice to only use fractions to explore the LAST item in each
-     * combination as a fraction
+     * combination as a fraction, my original recursive implementation
      * @param itemsList list of items in the knapsack
      * @param startIdx beginning index to try
      * @param currentCombo current combination of items being used
@@ -134,12 +136,10 @@ public class FractionalBruteForce extends AlgorithmParent{
                 }
             }
         }
-
         if (currentComboValue + bestFractionalValue > bestMax) {
             fractItem = tempFractItem;
             amtTaken = tempAmtTaken;
         }
-
         return currentComboValue + bestFractionalValue; // Return the total value including the best fractional addition
     }
 
@@ -156,6 +156,41 @@ public class FractionalBruteForce extends AlgorithmParent{
         return totalVal;
     }
 
+    /**
+     * Iterates through each possible combination, determining if it meets the constraints of the knapsack
+     * problem and updates global values as necessary
+     * Note: this may borrow some elements from the Greedy algorithm, since
+     * @param itemsList list of the items in the knapsack
+     * @param maxCapacity the maximum capacity that the knapsack can hold
+     */
+    private void findBestComboAndMax(ArrayList<Item> itemsList, int maxCapacity) {
+        int totalItems = itemsList.size();
+        int totalCombos = (int) Math.pow(2, totalItems); // Calculate the total number of possible combinations
+
+        for (int comboIdx = 0; comboIdx < totalCombos; comboIdx++) { // Iterate through every combination
+            ArrayList<Item> currentCombo = new ArrayList<>();
+            double currentVal = 0;
+            int currentWt = 0;
+
+            for (int itemIdx = 0; itemIdx < totalItems; itemIdx++) { // Determine which items are included
+                if ((comboIdx & (int)Math.pow(2, itemIdx)) > 0) { // Check if the item is included, essentially through a bit mask
+                    Item item = itemsList.get(itemIdx);
+                    currentCombo.add(item);
+                    currentVal += item.getVal();
+                    currentWt += item.getWt();
+                }
+            }
+
+            // Check if this combination meets the constraints, and if it can fit an additional fractional item
+            if (currentWt <= maxCapacity) {
+                double bestFractVal = addFractionalItem(itemsList, currentCombo, currentWt, maxCapacity, currentVal);
+                if (bestFractVal > bestMax) {
+                    bestMax = bestFractVal; // Update with new max value
+                    bestCombo = new ArrayList<>(currentCombo); // Update with the new best combination
+                }
+            }
+        }
+    }
 
     }
 

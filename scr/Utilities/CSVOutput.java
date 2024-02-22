@@ -203,9 +203,18 @@ public class CSVOutput {
         return testResultsValue;
     }
 
+    /**
+     * Adds another TestResult object from the 01 Knapsack problems to the algorithm's ArrayList of 01 TestResults
+     * @param results 01 TestResult object to add
+     */
     public void add01(TestResult results) {
         testResults01.add(results);
     }
+
+    /**
+     * Adds another TestResult object from the fractional knapsack problem to the algorithm's ArrayList of fractional TestResults
+     * @param results fractional TestResult object to add
+     */
 
     public void addFract(TestResult results) {
         testResultsFract.add(results);
