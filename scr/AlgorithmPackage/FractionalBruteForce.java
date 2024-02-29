@@ -40,6 +40,7 @@ public class FractionalBruteForce extends AlgorithmParent{
         ArrayList<ArrayList<Item>> combinations = new ArrayList<>();
         //findBestCombo(items, 0, new ArrayList<>(), 0, knapsackWtLeft, 0);
         findBestComboAndMax(items, knapsackWtLeft);
+
         for (Item oneItem : bestCombo) {
             results.addItemsUsed(oneItem, oneItem.getWt());
         }
