@@ -28,7 +28,7 @@ public class AlgorithmTester {
         this.csvOutput = csvOutput;
 
         // set up array of algorithm objects
-        algorithms = new AlgorithmParent[6];
+        algorithms = new AlgorithmParent[5];
 
 
         // 01 algorithms
@@ -38,13 +38,13 @@ public class AlgorithmTester {
 
         // fractional algorithms
         algorithms[3] = new DynamicKnapSack(true);
-        algorithms[4] = new FractionalBruteForce();
-        algorithms[5] = new FractionalGreedy();
+        //algorithms[4] = new FractionalBruteForce();
+        algorithms[4] = new FractionalGreedy();
 
         knapsacks = knapGen.getKnapList();
 
         // set up array of test result arraylists
-        testResults = new ArrayList[6];
+        testResults = new ArrayList[5];
         for (int i = 0; i < testResults.length; i++) {
             testResults[i] = new ArrayList<>();
         }
@@ -92,7 +92,7 @@ public class AlgorithmTester {
         for (Knapsack knapsack : knapsacks) {
             for (int i = 0; i < knapsacks.size(); i++) {
                 terminalOutput.printProblemSet(knapsack, i + 1, 4);
-                for (int j = 3; j < 6; j++) {
+                for (int j = 3; j < 5; j++) {
                     terminalOutput.printTestResults(testResults[j].get(i));
                 }
             }
